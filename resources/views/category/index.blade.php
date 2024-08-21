@@ -1,22 +1,23 @@
 @extends('layouts.app')
-@section('title', 'Data User')
+@section('title', 'Data Kategori')
 
 @section('content')
 
 
 <div class="table-responsive">
+
     @if (session('message'))
     <div class="alert alert-success">{{session('message')}}</div>
-        @endif
+    @endif
+
     <div align="right" class="mb-3">
-        <a href="{{route('user.create')}}" class="btn btn-primary">Tambah</a>
+        <a href="{{route('category.create')}}" class="btn btn-primary">Tambah</a>
     </div>
     <table class="table table-bordered">
         <thead>
             <tr>
                 <th>No</th>
-                <th>Nama</th>
-                <th>Email</th>
+                <th>Nama Kategori</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -24,15 +25,14 @@
             @php
                 $no = 1;
             @endphp
-            @foreach ( $users as $user )
+            @foreach ( $categories as $category )
             <tr>
                 <td>{{ $no++ }}</td>
-                <td>{{ $user->name }}</td>
-                <td>{{ $user->email }}</td>
+                <td>{{ $category->category_name }}</td>
                 <td>
-                    <a href="{{route('user.edit', $user->id)}}" class="btn btn-success btn-xs">Edit</a>
-                    {{-- <a href="{{route('user.destroy', $user->id)}}" class="btn btn-danger btn-xs">Delete</a> --}}
-                    <form class="d-inline" action="{{route('user.destroy', $user->id)}}" method="post">
+                    <a href="{{route('category.edit', $category->id)}}" class="btn btn-success btn-xs">Edit</a>
+                    {{-- <a href="{{route('category.destroy', $category->id)}}" class="btn btn-danger btn-xs">Delete</a> --}}
+                    <form class="d-inline" action="{{route('category.destroy', $category->id)}}" method="post">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-xs">Delete</button>
