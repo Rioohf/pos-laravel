@@ -24,7 +24,7 @@
 @include('inc.sidebar')
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" style="background:#E1EBEE">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
@@ -98,5 +98,78 @@
 <script src="{{asset('adm/dist/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('adm/dist/js/demo.js')}}"></script>
+
+<script>
+    $('#category_id').change(function(){
+        let category_id = $(this).val(), option="";
+
+        $.ajax({
+            url:'/get-products/' + category_id,
+            type:'GET',
+            dataType:'json',
+            success:function(resp){
+                option += "<option value=''>Pilih Produk</option>";
+                $.each(resp, function(index, val){
+                    option += "<option value=" + val.id + ">" + val.product_name + "</option>"
+                });
+
+                $('#product_id').html(option);
+            }
+        });
+    });
+
+    $('#product_id').change(function(){
+        let product_id = $(this).val(), option="";
+
+        $.ajax({
+            url:'/get-product/' + product_id,
+            type:'GET',
+            dataType:'json',
+            success:function(data){
+                $('#product_name').val(data.product_name);
+                $('#product_price').val(data.product_price);
+            }
+        });
+    });
+
+    $('.tambah-produk').click(function(){
+        let category_id = $('#category_id').val(), product_id = $('#product_id').val();
+
+        if (category_id == "") {
+            alert('Mohon Pilih Produk Terlebih Dahulu');
+            return false;
+        }
+
+        if (product_id == "") {
+            alert('Mohon Pilih Produk Terlebih Dahulu');
+            return false;
+        }
+
+        let product_qty = $('#product_qty').val(),
+        product_name = $('#product_name').val(),
+        product_price = parseInt($('#product_price').val()),
+        subTotal = product_price * product_qty;
+
+        let newRow = "";
+        newRow += "<tr>";
+            newRow += `<td>${product_name}</td>`; //Boleh pakai yang ini `<td>${product_name}</td>` atau yang ini "<td>" + product_name + "</td>"
+            newRow += "<td>" + "Rp"+ product_price.toLocaleString('id-ID') + "</td>"; // .toLocaleString('id') untuk tamplate harga (ada titik) dalam setiap angka sesuai dalam format uang
+            newRow += "<td>" + product_qty + "</td>";
+            newRow += "<td>" + "Rp"+ subTotal.toLocaleString('id') + "<input type='hidden' class='sub_total_val' value='" + subTotal + "'></td>";
+            newRow += "<td></td>";
+        newRow += "</tr>";
+
+        $('tbody').append(newRow);
+
+        let total = 0;
+        $('.sub_total_val').each(function(){
+            let subTotal = parseFloat($(this).val()) || 0;
+            total += subTotal;
+        });
+
+        $('.total_price').text(total.toLocaleString('id-ID'));
+
+    });
+</script>
 </body>
 </html>
