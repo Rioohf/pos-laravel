@@ -60,6 +60,7 @@
           </div>
         </div>
         <div class="card-body">
+            @include('sweetalert::alert')
           @yield('content')
         </div>
         <!-- /.card-body -->
@@ -98,6 +99,8 @@
 <script src="{{asset('adm/dist/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('adm/dist/js/demo.js')}}"></script>
+
+@include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
 
 <script>
     $('#category_id').change(function(){
@@ -152,14 +155,15 @@
 
         let newRow = "";
         newRow += "<tr>";
-            newRow += `<td>${product_name}</td>`; //Boleh pakai yang ini `<td>${product_name}</td>` atau yang ini "<td>" + product_name + "</td>"
+            newRow += `<td>${product_name}<input type='hidden' name='product_id[]' value=${product_id}></td>`; //Boleh pakai yang ini `<td>${product_name}</td>` atau yang ini "<td>" + product_name + "</td>"
             newRow += "<td>" + "Rp"+ product_price.toLocaleString('id-ID') + "</td>"; // .toLocaleString('id') untuk tamplate harga (ada titik) dalam setiap angka sesuai dalam format uang
-            newRow += "<td>" + product_qty + "</td>";
-            newRow += "<td>" + "Rp"+ subTotal.toLocaleString('id') + "<input type='hidden' class='sub_total_val' value='" + subTotal + "'></td>";
+            newRow += "<td>" + product_qty + "<input type='hidden' name='qty[]' value='" + product_qty + "'></td>";
+            newRow += "<td>" + "Rp"+ subTotal.toLocaleString('id-ID') + "<input type='hidden' name='sub_total[]' class='sub_total_val' value='" + subTotal + "'></td>";
             newRow += "<td></td>";
         newRow += "</tr>";
 
         $('tbody').append(newRow);
+        calculateChange()
 
         let total = 0;
         $('.sub_total_val').each(function(){
@@ -168,7 +172,20 @@
         });
 
         $('.total_price').text(total.toLocaleString('id-ID'));
+        $('#total_price_val').val(total);
 
+    });
+
+    function calculateChange(){
+        let total = parseFloat($('#total_price_val').val() || 0);
+        let dibayar = parseFloat($('#dibayar').val() || 0);
+        let kembali = dibayar - total;
+        $('.kembalian_text').text(kembali.toLocaleString('id-ID'));
+        $('#kembalian').val(kembali);
+    }
+
+    $('#dibayar').on('change', function(){
+        calculateChange()
     });
 </script>
 </body>

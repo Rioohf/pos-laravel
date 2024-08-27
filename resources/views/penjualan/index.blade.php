@@ -2,17 +2,18 @@
 @section('title', 'Transaksi Penjualan')
 
 @section('content')
-<form action="" method="post">
+<form action="{{route('penjualan.store')}}" method="post">
+    @csrf
     <div class="row">
         <div class="col-sm-6">
             <div class="mb-3">
                 <label for="">Kode Transaksi</label>
-                <input type="text" class="form-control" readonly value="" name="kode_transaksi">
+                <input type="text" class="form-control" readonly value="{{$kode_transaksi ?? '' }}" name="kode_transaksi">
             </div>
 
             <div class="mb-3">
-                <label for="">Kategori Produk</label>
-                <select class="form-control" name="category_id" id="category_id">
+                <label for="">Kategori Produk *</label>
+                <select required class="form-control" name="category_id" id="category_id">
                     <option value="">Pilih Kategori Produk</option>
                     @foreach ($categories as $cat )
                     <option value="{{ $cat->id }}">{{ $cat->category_name }}</option>
@@ -21,8 +22,8 @@
             </div>
 
             <div class="mb-3">
-                <label for="">Qty Produk</label>
-                <input type="number" class="form-control" placeholder="Jumlah Produk" id="product_qty">
+                <label for="">Qty Produk *</label>
+                <input required type="number" class="form-control" placeholder="Jumlah Produk" id="product_qty">
             </div>
         </div>
         {{-- col-sm-6 bawah --}}
@@ -33,8 +34,8 @@
             </div>
 
             <div class="mb-3">
-                <label for="">Nama Produk</label>
-                <select class="form-control" name="" id="product_id">
+                <label for="">Nama Produk *</label>
+                <select required class="form-control" name="" id="product_id">
                     <option value="">Pilih Produk</option>
                 </select>
             </div>
@@ -67,6 +68,7 @@
             </div>
             <div class="col-sm-4">
                 <h4 class="total_price"></h4>
+                <input type="hidden" name="total_price" id="total_price_val">
             </div>
         </div>
 
@@ -75,7 +77,7 @@
                 <h4>Di Bayar</h4>
             </div>
             <div class="col-sm-4">
-                <input type="number" class="form-control" id="dibayar">
+                <input type="number" class="form-control" id="dibayar" name="dibayar">
             </div>
         </div>
 
@@ -84,8 +86,13 @@
                 <h4>Kembali</h4>
             </div>
             <div class="col-sm-4">
-                <input type="text" class="form-control" readonly id="kembalian">
+                <h4 class="kembalian_text"></h4>
+                <input type="hidden" class="form-control" readonly id="kembalian" name="kembalian">
             </div>
+        </div>
+
+        <div class="mt-4" align="right">
+            <button type="submit" class="btn btn-success">Buat Pesanan</button>
         </div>
 
     </div>
