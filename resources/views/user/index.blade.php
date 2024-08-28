@@ -11,7 +11,7 @@
     <div align="right" class="mb-3">
         <a href="{{route('user.create')}}" class="btn btn-primary">Tambah</a>
     </div>
-    <table class="table table-bordered">
+    <table class="table table-bordered" id="example1">
         <thead>
             <tr>
                 <th>No</th>
