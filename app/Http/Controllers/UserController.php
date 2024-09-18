@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Level;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -16,6 +17,10 @@ class UserController extends Controller
     {
         //select * from user
         $users = User::orderBy('id', 'desc')->get();
+
+        $title = 'Delete User!';
+        $text = "Are you sure you want to delete?";
+        confirmDelete($title, $text);
         return view('user.index', compact('users'));
     }
 
@@ -24,7 +29,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.create');
+        $levels = Level::get();
+        return view('user.create', compact('levels'));
     }
 
     /**
@@ -39,10 +45,11 @@ class UserController extends Controller
         User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'id_level' => $request->id_level,
             'password' => Hash::make($request->password)
         ]);
         // alert('Title','Lorem Lorem Lorem', 'success');
-        toast('User berhasil di simpan!','success');
+        toast('User berhasil di simpan!', 'success');
         return redirect()->to('user')->with('message', 'Data berhasil di simpan!');
     }
 
@@ -61,7 +68,8 @@ class UserController extends Controller
     {
         // $edit = User::find($id);
         $edit = User::findOrFail($id);
-        return view('user.edit', compact('edit'));
+        $levels = Level::get();
+        return view('user.edit', compact('edit', 'levels'));
     }
 
     /**
@@ -73,6 +81,7 @@ class UserController extends Controller
         User::where('id', $id)->update([
             'name' => $request->name,
             'email' => $request->email,
+            'id_level' => $request->id_level,
             'password' => Hash::make($request->password ? Hash::make($request->password) : $user->password)
         ]);
         return redirect()->to('user')->with('message', 'Data berhasil di ubah!');

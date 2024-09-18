@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\LevelController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +31,7 @@ Route::get('keluar', function(){
 Route::resource('penjualan', \App\Http\Controllers\TransactionController::class);
 Route::resource('dashboard', \App\Http\Controllers\DashboardController::class)->middleware('auth');
 Route::resource('user', \App\Http\Controllers\UserController::class);
+Route::resource('level', \App\Http\Controllers\LevelController::class);
 Route::resource('category', \App\Http\Controllers\CategoryController::class);
 Route::resource('product', \App\Http\Controllers\ProductController::class);
 

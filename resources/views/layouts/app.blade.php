@@ -22,6 +22,9 @@
 <!-- Site wrapper -->
 <div class="wrapper">
 
+    @include('sweetalert::alert')
+
+
  <!-- navbar -->
 @include('inc.navbar')
 <!-- navbar -->

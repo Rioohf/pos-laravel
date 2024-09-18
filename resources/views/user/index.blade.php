@@ -17,6 +17,7 @@
                 <th>No</th>
                 <th>Nama</th>
                 <th>Email</th>
+                <th>Level</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -29,6 +30,7 @@
                 <td>{{ $no++ }}</td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
+                <td>{{$user->levels->level_name}}</td>
                 <td>
                     <a href="{{route('user.edit', $user->id)}}" class="btn btn-success btn-xs">Edit</a>
                     {{-- <a href="{{route('user.destroy', $user->id)}}" class="btn btn-danger btn-xs">Delete</a> --}}
