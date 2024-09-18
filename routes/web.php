@@ -23,10 +23,11 @@ Route::get('keluar', function(){
     return redirect()->to('login');
 })->name('keluar');
 
-Route::middleware(['checkLevel:3'])->group(function(){
-    Route::resource('penjualan', \App\Http\Controllers\TransactionController::class);
+// Route::middleware(['checkLevel:3'])->group(function(){
 
-});
+
+// });
+Route::resource('penjualan', \App\Http\Controllers\TransactionController::class);
 Route::resource('dashboard', \App\Http\Controllers\DashboardController::class)->middleware('auth');
 Route::resource('user', \App\Http\Controllers\UserController::class);
 Route::resource('category', \App\Http\Controllers\CategoryController::class);

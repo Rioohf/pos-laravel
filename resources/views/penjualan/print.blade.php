@@ -87,9 +87,9 @@
 <body>
 <div class="struk">
     <div class="struk-header">
-        <h1>Toko Jaya Abadi</h1>
+        <h1>PPKD Jakarta Pusat</h1>
         <p>Jl.Karet Benhil Kota Jakarta Pusat</p>
-        <p>Telp (021) 88965731</p>
+        <p>Telp (021) 57950913</p>
     </div>
     <div class="struk-body">
         <table>
